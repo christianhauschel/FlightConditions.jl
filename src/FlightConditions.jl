@@ -10,7 +10,7 @@ export FlightCondition, update!, γ, R
 
 
 """
-Flight condition struct
+    FlightCondition(T, p, ρ, μ, ν, c)
 
 T: temperature (K)
 p: pressure (Pa)
@@ -41,15 +41,15 @@ function FlightCondition(altitude::Number)
 end
 
 """
-    update!(fc, altitude)
+    update!(flight_condition, altitude)
 
 Update the FlightCondition given the altitude, using the standard atmosphere.
 """
-function update!(fc::FlightCondition, altitude::Number)
-    fc.ρ, fc.p, fc.T, fc.μ = ISAdata(altitude)
-    
-    fc.ν = μ / ρ
-    fc.c = sqrt(γ * R * T)
+function update!(flight_condition::FlightCondition, altitude::Number)
+    flight_condition.ρ, flight_condition.p, flight_condition.T, flight_condition.μ = ISAdata(altitude)
+
+    flight_condition.ν = μ / ρ
+    flight_condition.c = sqrt(γ * R * T)
 end
 
 """
@@ -66,14 +66,16 @@ function FlightCondition(p::Number, T::Number)
 end
 
 """
+    update!(flight_condition, p, T)
+
 Update the FlightCondition given the pressure and temperature.
 """
-function update!(fc::FlightCondition, p::Number, T::Number)
-    fc.ρ = p / (R * T)
-    fc.μ = sutherland(T)
-    
-    fc.ν = μ / ρ
-    fc.c = sqrt(γ * R * T)
+function update!(flight_condition::FlightCondition, p::Number, T::Number)
+    flight_condition.ρ = p / (R * T)
+    flight_condition.μ = sutherland(T)
+
+    flight_condition.ν = μ / ρ
+    flight_condition.c = sqrt(γ * R * T)
 end
 
 """
@@ -82,8 +84,8 @@ Sutherland's law for dynamic viscosity of air.
 # References
 1. https://doc.comsol.com/5.5/doc/com.comsol.help.cfd/cfd_ug_fluidflow_high_mach.08.27.html
 """
-function sutherland(T; μ_ref = 1.716e-5, T_ref = 273, S = 111)
-    return μ_ref * (T / T_ref)^(3/2) * (T_ref + S) / (T + S)
+function sutherland(T; μ_ref=1.716e-5, T_ref=273, S=111)
+    return μ_ref * (T / T_ref)^(3 / 2) * (T_ref + S) / (T + S)
 end
 
 
