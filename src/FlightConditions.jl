@@ -29,26 +29,32 @@ mutable struct FlightCondition
 end
 
 """
+    FlightCondition(altitude)
+
 Constructor for FlightCondition given the altitude using the standard atmosphere.
 """
-function FlightCondition(h::Number)
-    ρ, p, T, μ = ISAdata(h)
+function FlightCondition(altitude::Number)
+    ρ, p, T, μ = ISAdata(altitude)
     ν = μ / ρ
     c = sqrt(γ * R * T)
     return FlightCondition(T, p, ρ, μ, ν, c)
 end
 
 """
+    update!(fc, altitude)
+
 Update the FlightCondition given the altitude, using the standard atmosphere.
 """
-function update!(fc::FlightCondition, h::Number)
-    fc.ρ, fc.p, fc.T, fc.μ = ISAdata(h)
+function update!(fc::FlightCondition, altitude::Number)
+    fc.ρ, fc.p, fc.T, fc.μ = ISAdata(altitude)
     
     fc.ν = μ / ρ
     fc.c = sqrt(γ * R * T)
 end
 
 """
+    FlightCondition(p, T)
+
 Constructor for FlightCondition given the pressure and temperature.
 """
 function FlightCondition(p::Number, T::Number)
