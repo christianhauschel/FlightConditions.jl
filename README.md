@@ -14,7 +14,8 @@ fc2 = FlightCondition(1e5, 300)
 println(fc2)
 ```
 
-### Output:
+### Output
+
 ```julia
 ─── Flight Condition ───
   T =     281.68 K     (temperature)
@@ -32,3 +33,7 @@ println(fc2)
   ν =  1.591e-05 m²/s  (dynamic viscosity)
   c =     347.22 m/s   (speed of sound)
 ```
+
+## License
+
+This code is licensed under MIT.
