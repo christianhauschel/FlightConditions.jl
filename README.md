@@ -1,4 +1,4 @@
-# `FlightConditions`
+# FlightConditions.jl
 
 Small package to calculate atmospheric conditions using the standard atmosphere or given a (pressure, temperature) pair.
 
